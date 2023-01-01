@@ -7,7 +7,7 @@ var mysql = require("mysql");
 
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-//var db = require("./database");
+var db = require("./database");
 const { Client, MessageMedia, LocalAuth } = require("whatsapp-web.js");
 const express = require("express");
 const socketIO = require("socket.io");
@@ -95,25 +95,13 @@ var mysql_pool = mysql.createPool({
 });
 
 app.get("/get_instance", function (req, res) {
-  //getArticleTitles()
-  var query = "SELECT * FROM tblinstance ORDER BY intInstanceCode desc";
-  pool.query(query, function (err, rows) {
-    if (err) {
-      console.log(JSON.stringify(err));
-      return res.json([
-        {
-          Error: 1,
-          Message: err,
-        },
-      ]);
-    } else {
-      return res.status(200).json([
-        {
-          rows,
-        },
-      ]);
+  db.query(
+    "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
+    null,
+    function (data, error) {
+      callback(data, error);
     }
-  });
+  );
 });
 
 // app.get("/get_instance", function (req, res, next) {

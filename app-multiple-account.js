@@ -80,42 +80,39 @@ app.get("/refresh", function (req, res) {
 //   res.send(`<h1>${req.params.id}</h1>`);
 //   console.log("param" + req.params.id);
 // });
-
+var self = this;
 var mysql_pool = mysql.createPool({
   connectionLimit: 100,
+  waitForConnections: true,
+  queueLimit: 0,
   host: "198.54.114.230",
   user: "contiuvl_waqas", //
   password: "Pe@chgate173", //
   database: "contiuvl_Instance",
+  debug: true,
+  wait_timeout: 28800,
+  connect_timeout: 10,
 });
-app.get("/get_instance", function (req, res) {
-  console.log("API CALL: /get_instance");
-  var retvalSettingValue = "?";
-  mysql_pool.getConnection(function (err, connection) {
+self.configureExpress(mysql_pool);
+router.get("/get_instance", function (req, res) {
+  //getArticleTitles()
+  var query = "SELECT * FROM tblinstance ORDER BY intInstanceCode desc";
+  pool.query(query, function (err, rows) {
     if (err) {
-      mysql_pool.release();
-      console.log(" Error getting mysql_pool connection: " + err);
-      throw err;
+      console.log(JSON.stringify(err));
+
+      res.json({
+        Error: 1,
+        Message:
+          "Error while getting the data from Remote DataBase motherofall.org",
+      });
+    } else {
+      return res.status(200).json([
+        {
+          rows,
+        },
+      ]);
     }
-    mysql_pool.query(
-      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
-      function (err2, rows, fields) {
-        if (err2) {
-          var data = { Time: "", DatabaseStatus: "" };
-          data["Time"] = new Date().getTime();
-          data["DatabaseStatus"] = "Down";
-          res.json(data);
-        } else {
-          return res.status(200).json([
-            {
-              rows,
-            },
-          ]);
-        }
-        console.log(" mysql_pool.release()");
-        mysql_pool.release();
-      }
-    );
   });
 });
 

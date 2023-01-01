@@ -100,12 +100,12 @@ app.get("/get_instance", function (req, res) {
   pool.query(query, function (err, rows) {
     if (err) {
       console.log(JSON.stringify(err));
-
-      res.json({
-        Error: 1,
-        Message:
-          "Error while getting the data from Remote DataBase motherofall.org",
-      });
+      return res.json([
+        {
+          Error: 1,
+          Message: err,
+        },
+      ]);
     } else {
       return res.status(200).json([
         {

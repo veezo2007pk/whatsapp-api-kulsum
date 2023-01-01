@@ -13,13 +13,13 @@ var DB = (function () {
   function _query(query, params, callback) {
     pool.getConnection(function (err, connection) {
       if (err) {
-        connection.release();
+        //connection.release();
         callback(null, err);
         throw err;
       }
 
       connection.query(query, params, function (err, rows) {
-        connection.release();
+        //connection.release();
         if (!err) {
           callback(rows);
         } else {
@@ -28,7 +28,7 @@ var DB = (function () {
       });
 
       connection.on("error", function (err) {
-        connection.release();
+        //connection.release();
         callback(null, err);
         throw err;
       });

@@ -27,7 +27,7 @@
     "http": "0.0.1-security",
     "mime-types": "^2.1.32",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1",
+    "mysql": "github:mysqljs/mysql",
     "pm2": "^5.2.2",
     "qrcode": "^1.4.4",
     "socket.io": "2.3.0",

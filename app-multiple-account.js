@@ -98,7 +98,7 @@ app.get("/get_instance", function (req, res, next) {
       }
     }
   );
-db.end();
+db.release();
 });
 
 app.get("/get_MobileNo", function (req, res, next) {

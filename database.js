@@ -1,5 +1,6 @@
 var mysql = require("mysql");
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
+  connectionLimit: 100,
   host: "198.54.114.230",
   user: "contiuvl_waqas", //
   password: "Pe@chgate173", //
@@ -20,11 +21,11 @@ var connection = mysql.createConnection({
   //   return useDefaultTypeCasting();
   // },
 });
-connection.connect((err) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log("Database connected");
-});
+// connection.connect((err) => {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   console.log("Database connected");
+// });
 module.exports = connection;

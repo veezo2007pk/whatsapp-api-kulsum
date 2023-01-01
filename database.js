@@ -23,11 +23,5 @@ var connection = mysql.createPool(
   },
   { debug: true }
 );
-connection.connect((err) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log("Database connected");
-});
+
 module.exports = connection;

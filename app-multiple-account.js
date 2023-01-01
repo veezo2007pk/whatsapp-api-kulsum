@@ -3,8 +3,6 @@ var session = require("express-session");
 //var flash = require("express-flash");
 var logger = require("morgan");
 var path = require("path");
-var mysql = require("mysql");
-
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var db = require("./database");
@@ -80,52 +78,27 @@ app.get("/refresh", function (req, res) {
 //   res.send(`<h1>${req.params.id}</h1>`);
 //   console.log("param" + req.params.id);
 // });
-var self = this;
-var mysql_pool = mysql.createPool({
-  connectionLimit: 100,
-  waitForConnections: true,
-  queueLimit: 0,
-  host: "198.54.114.230",
-  user: "contiuvl_waqas", //
-  password: "Pe@chgate173", //
-  database: "contiuvl_Instance",
-  debug: true,
-  wait_timeout: 28800,
-  connect_timeout: 10,
-});
-
-app.get("/get_instance", function (req, res) {
+app.get("/get_instance", function (req, res, next) {
   db.query(
     "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
-    null,
-    function (data, error) {
-      callback(data, error);
+    function (err, rows) {
+      //console.log(row);
+      if (err) {
+        return res.status(500).json([
+          {
+            message: err,
+          },
+        ]);
+      } else {
+        return res.status(200).json([
+          {
+            rows,
+          },
+        ]);
+      }
     }
   );
 });
-
-// app.get("/get_instance", function (req, res, next) {
-//   db.query(
-//     "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
-//     function (err, rows) {
-//       //console.log(row);
-//       if (err) {
-//         return res.status(500).json([
-//           {
-//             message: err,
-//           },
-//         ]);
-//       } else {
-//         return res.status(200).json([
-//           {
-//             rows,
-//           },
-//         ]);
-//       }
-//     }
-//   );
-// db.release();
-// });
 
 app.get("/get_MobileNo", function (req, res, next) {
   const id = req.query.id;

@@ -94,7 +94,7 @@ var mysql_pool = mysql.createPool({
   connect_timeout: 10,
 });
 
-router.get("/get_instance", function (req, res) {
+app.get("/get_instance", function (req, res) {
   //getArticleTitles()
   var query = "SELECT * FROM tblinstance ORDER BY intInstanceCode desc";
   pool.query(query, function (err, rows) {

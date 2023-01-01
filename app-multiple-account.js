@@ -3,9 +3,11 @@ var session = require("express-session");
 //var flash = require("express-flash");
 var logger = require("morgan");
 var path = require("path");
+var mysql = require("mysql");
+
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-var db = require("./database");
+//var db = require("./database");
 const { Client, MessageMedia, LocalAuth } = require("whatsapp-web.js");
 const express = require("express");
 const socketIO = require("socket.io");
@@ -78,28 +80,66 @@ app.get("/refresh", function (req, res) {
 //   res.send(`<h1>${req.params.id}</h1>`);
 //   console.log("param" + req.params.id);
 // });
-app.get("/get_instance", function (req, res, next) {
-  db.query(
-    "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
-    function (err, rows) {
-      //console.log(row);
-      if (err) {
-        return res.status(500).json([
-          {
-            message: err,
-          },
-        ]);
-      } else {
-        return res.status(200).json([
-          {
-            rows,
-          },
-        ]);
-      }
-    }
-  );
-db.release();
+var mysql_pool = mysql.createPool({
+  connectionLimit: 100,
+  host: "198.54.114.230",
+  user: "contiuvl_waqas", //
+  password: "Pe@chgate173", //
+  database: "contiuvl_Instance",
 });
+app.get("/get_instance", function (req, res) {
+  console.log("API CALL: /get_instance");
+  var retvalSettingValue = "?";
+  mysql_pool.getConnection(function (err, connection) {
+    if (err) {
+      connection.release();
+      console.log(" Error getting mysql_pool connection: " + err);
+      throw err;
+    }
+    connection.query(
+      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+      function (err2, rows, fields) {
+        if (err2) {
+          var data = { Time: "", DatabaseStatus: "" };
+          data["Time"] = new Date().getTime();
+          data["DatabaseStatus"] = "Down";
+          res.json(data);
+        } else {
+          return res.status(200).json([
+            {
+              rows,
+            },
+          ]);
+        }
+        console.log(" mysql_pool.release()");
+        connection.release();
+      }
+    );
+  });
+});
+
+// app.get("/get_instance", function (req, res, next) {
+//   db.query(
+//     "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
+//     function (err, rows) {
+//       //console.log(row);
+//       if (err) {
+//         return res.status(500).json([
+//           {
+//             message: err,
+//           },
+//         ]);
+//       } else {
+//         return res.status(200).json([
+//           {
+//             rows,
+//           },
+//         ]);
+//       }
+//     }
+//   );
+// db.release();
+// });
 
 app.get("/get_MobileNo", function (req, res, next) {
   const id = req.query.id;

@@ -1,0 +1,38 @@
+{
+  "name": "whatsapp-api",
+  "version": "1.0.0",
+  "description": "Whatsapp api by Ngekoding",
+  "main": "app.js",
+  "scripts": {
+    "start": "pm2 start app-multiple-account.js",
+    "start:dev": "pm2 start app-multiple-account.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "whatsapp-api",
+    "node.js"
+  ],
+  "author": "Nur Muhammad",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "body-parser": "^1.20.1",
+    "chromium": "^3.0.3",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.9.2",
+    "http": "0.0.1-security",
+    "mime-types": "^2.1.32",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "qrcode": "^1.4.4",
+    "socket.io": "2.3.0",
+    "whatsapp-web.js": "^1.18.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

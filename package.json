@@ -4,8 +4,8 @@
   "description": "Whatsapp api by Ngekoding",
   "main": "app.js",
   "scripts": {
-    "start": "node app-multiple-account.js",
-    "start:dev": "node app-multiple-account.js",
+    "start": "pm2 start app-multiple-account.js",
+    "start:dev": "pm2 start app-multiple-account.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

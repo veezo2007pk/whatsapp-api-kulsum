@@ -80,6 +80,7 @@ app.get("/refresh", function (req, res) {
 //   res.send(`<h1>${req.params.id}</h1>`);
 //   console.log("param" + req.params.id);
 // });
+
 var mysql_pool = mysql.createPool({
   connectionLimit: 100,
   host: "198.54.114.230",
@@ -92,11 +93,11 @@ app.get("/get_instance", function (req, res) {
   var retvalSettingValue = "?";
   mysql_pool.getConnection(function (err, connection) {
     if (err) {
-      connection.release();
+      mysql_pool.release();
       console.log(" Error getting mysql_pool connection: " + err);
       throw err;
     }
-    connection.query(
+    mysql_pool.query(
       "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
       function (err2, rows, fields) {
         if (err2) {
@@ -112,7 +113,7 @@ app.get("/get_instance", function (req, res) {
           ]);
         }
         console.log(" mysql_pool.release()");
-        connection.release();
+        mysql_pool.release();
       }
     );
   });

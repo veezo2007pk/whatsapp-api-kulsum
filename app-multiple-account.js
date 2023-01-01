@@ -93,7 +93,7 @@ var mysql_pool = mysql.createPool({
   wait_timeout: 28800,
   connect_timeout: 10,
 });
-self.configureExpress(mysql_pool);
+
 router.get("/get_instance", function (req, res) {
   //getArticleTitles()
   var query = "SELECT * FROM tblinstance ORDER BY intInstanceCode desc";

@@ -92,7 +92,7 @@ const pool = mysql.createPool(
 
 app.get("/get_instance", function (req, res, next) {
   pool.getConnection(function (err, connection) {
-    if (err) throw error;
+    if (err) throw err;
 
     // Use the connection
     connection.query(
@@ -102,7 +102,7 @@ app.get("/get_instance", function (req, res, next) {
 
         return res.status(200).json([
           {
-            rows,
+            results,
           },
         ]);
 

@@ -82,10 +82,11 @@ app.get("/refresh", function (req, res) {
 var mysql = require("mysql");
 const pool = mysql.createPool(
   {
-    host: "198.54.114.230:3306",
+    host: "198.54.114.230",
     user: "contiuvl_waqas", //
     password: "Pe@chgate173", //
     database: "contiuvl_Instance",
+    port: 3306,
   },
   { debug: true }
 );

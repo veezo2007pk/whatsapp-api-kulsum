@@ -5,7 +5,7 @@ var logger = require("morgan");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-var db = require("./database");
+//var db = require("./database");
 const { Client, MessageMedia, LocalAuth } = require("whatsapp-web.js");
 const express = require("express");
 const socketIO = require("socket.io");
@@ -78,26 +78,48 @@ app.get("/refresh", function (req, res) {
 //   res.send(`<h1>${req.params.id}</h1>`);
 //   console.log("param" + req.params.id);
 // });
+
+const PoolManager = require("mysql-connection-pool-manager");
+
+// Options
+const options = {
+  host: "198.54.114.230",
+  user: "contiuvl_waqas", //
+  password: "Pe@chgate173", //
+  database: "contiuvl_Instance",
+};
+
+// Initialising the instance
+const mySQL = PoolManager(options);
+
+// Accessing mySQL directly
+var connection = mySQL.raw.createConnection({
+  host: "198.54.114.230",
+  user: "contiuvl_waqas", //
+  password: "Pe@chgate173", //
+  database: "contiuvl_Instance",
+});
+
+// Initialising connection
+connection.connect();
+
+// Performing query
+
 app.get("/get_instance", function (req, res, next) {
-  db.query(
-    "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
-    function (err, rows) {
-      //console.log(row);
-      if (err) {
-        return res.status(500).json([
-          {
-            message: err,
-          },
-        ]);
-      } else {
-        return res.status(200).json([
-          {
-            rows,
-          },
-        ]);
-      }
+  connection.query(
+    "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+    function (error, results, fields) {
+      if (error) throw error;
+      return res.status(200).json([
+        {
+          rows,
+        },
+      ]);
     }
   );
+
+  // Ending connection
+  connection.end();
 });
 
 app.get("/get_MobileNo", function (req, res, next) {

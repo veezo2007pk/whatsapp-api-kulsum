@@ -28,6 +28,7 @@
     "mime-types": "^2.1.32",
     "morgan": "^1.10.0",
     "mysql": "github:mysqljs/mysql",
+    "mysql-connection-pool-manager": "^1.5.9",
     "pm2": "^5.2.2",
     "qrcode": "^1.4.4",
     "socket.io": "2.3.0",

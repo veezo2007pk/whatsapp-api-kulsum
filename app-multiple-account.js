@@ -79,47 +79,50 @@ app.get("/refresh", function (req, res) {
 //   console.log("param" + req.params.id);
 // });
 
-const PoolManager = require("mysql-connection-pool-manager");
-
-// Options
-const options = {
-  host: "198.54.114.230",
-  user: "contiuvl_waqas", //
-  password: "Pe@chgate173", //
-  database: "contiuvl_Instance",
-};
-
-// Initialising the instance
-const mySQL = PoolManager(options);
-
-// Accessing mySQL directly
-var connection = mySQL.raw.createConnection({
-  host: "198.54.114.230",
-  user: "contiuvl_waqas", //
-  password: "Pe@chgate173", //
-  database: "contiuvl_Instance",
-});
-
-// Initialising connection
-connection.connect();
-
-// Performing query
+var mysql = require("mysql");
+const pool = mysql.createPool(
+  {
+    host: "198.54.114.230",
+    user: "contiuvl_waqas", //
+    password: "Pe@chgate173", //
+    database: "contiuvl_Instance",
+  },
+  { debug: true }
+);
 
 app.get("/get_instance", function (req, res, next) {
-  connection.query(
-    "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
-    function (error, results, fields) {
-      if (error) throw error;
-      return res.status(200).json([
-        {
-          rows,
-        },
-      ]);
-    }
-  );
+  pool.getConnection(function (err, connection) {
+    // Use the connection
+    connection.query(
+      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+      function (error, results, fields) {
+        // And done with the connection.
+        connection.release();
+
+        // Handle error after the release.
+        if (error) throw error;
+        return res.status(200).json([
+          {
+            rows,
+          },
+        ]);
+        // Don't use the connection here, it has been returned to the pool.
+      }
+    );
+  });
+  // connection.query(
+  //   "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+  //   function (error, results, fields) {
+  //     if (error) throw error;
+  //     return res.status(200).json([
+  //       {
+  //         rows,
+  //       },
+  //     ]);
+  //   }
+  // );
 
   // Ending connection
-  connection.end();
 });
 
 app.get("/get_MobileNo", function (req, res, next) {

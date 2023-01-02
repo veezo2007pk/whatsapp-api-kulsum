@@ -106,7 +106,7 @@ app.get("/get_instance", function (req, res, next) {
       trustedConnection: true,
       encrypt: true,
       enableArithAbort: true,
-      trustServerCertificate: false,
+      trustServerCertificate: true,
     },
   };
 

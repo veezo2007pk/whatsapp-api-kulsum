@@ -1,9 +1,9 @@
 var mysql = require("mysql");
 var connection = mysql.createConnection({
-  host: "198.54.114.230:3306",
-  user: "contiuvl_waqas", //
-  password: "Pe@chgate173", //
-  database: "contiuvl_Instance",
+  host: "166.62.10.190",
+  user: "kihlive", //
+  password: "e_V=g6]zQ[rA", //
+  database: "kihlive",
 
   // typeCast: function castField(field, useDefaultTypeCasting) {
   //   // We only want to cast bit fields that have a single-bit in them. If the field

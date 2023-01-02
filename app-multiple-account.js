@@ -100,6 +100,13 @@ app.get("/get_instance", function (req, res, next) {
     password: "Pe@chgate173",
     server: "hcmsolutions.com.pk",
     database: "Instance",
+    stream: false,
+    options: {
+      trustedConnection: true,
+      encrypt: true,
+      enableArithAbort: true,
+      trustServerCertificate: false,
+    },
   };
 
   // connect to your database

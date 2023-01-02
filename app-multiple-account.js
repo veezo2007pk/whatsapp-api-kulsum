@@ -5,7 +5,7 @@ var logger = require("morgan");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-//var db = require("./database");
+var db = require("./database");
 const { Client, MessageMedia, LocalAuth } = require("whatsapp-web.js");
 const express = require("express");
 const socketIO = require("socket.io");
@@ -91,37 +91,37 @@ const pool = mysql.createPool(
 );
 
 app.get("/get_instance", function (req, res, next) {
-  pool.getConnection(function (err, connection) {
-    if (err) throw err;
+  // pool.getConnection(function (err, connection) {
+  //   if (err) throw err;
 
-    // Use the connection
-    connection.query(
-      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
-      function (error, results, fields) {
-        if (error) throw error;
+  //   // Use the connection
+  //   connection.query(
+  //     "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+  //     function (error, results, fields) {
+  //       if (error) throw error;
 
-        return res.status(200).json([
-          {
-            results,
-          },
-        ]);
+  //       return res.status(200).json([
+  //         {
+  //           results,
+  //         },
+  //       ]);
 
-        // Don't use the connection here, it has been returned to the pool.
-      }
-    );
-    connection.release();
-  });
-  // connection.query(
-  //   "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
-  //   function (error, results, fields) {
-  //     if (error) throw error;
-  //     return res.status(200).json([
-  //       {
-  //         rows,
-  //       },
-  //     ]);
-  //   }
-  // );
+  //       // Don't use the connection here, it has been returned to the pool.
+  //     }
+  //   );
+  //   connection.release();
+  // });
+  db.query(
+    "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+    function (error, results, fields) {
+      if (error) throw error;
+      return res.status(200).json([
+        {
+          rows,
+        },
+      ]);
+    }
+  );
 
   // Ending connection
 });

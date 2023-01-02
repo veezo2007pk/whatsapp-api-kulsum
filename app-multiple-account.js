@@ -96,7 +96,7 @@ app.get("/get_instance", function (req, res, next) {
 
   // config for your database
   var config = {
-    user: "veezo2007pk",
+    user: "veezo",
     password: "Pe@chgate173",
     server: "hcmsolutions.com.pk",
     database: "Instance",

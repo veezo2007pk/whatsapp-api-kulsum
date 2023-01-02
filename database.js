@@ -1,9 +1,10 @@
 var mysql = require("mysql");
-var connection = mysql.createPool({
+var connection = mysql.createConnection({
   host: "198.54.114.230",
   user: "contiuvl_waqas", //
   password: "Pe@chgate173", //
   database: "contiuvl_Instance",
+  port: 3306,
 
   // typeCast: function castField(field, useDefaultTypeCasting) {
   //   // We only want to cast bit fields that have a single-bit in them. If the field
@@ -20,11 +21,11 @@ var connection = mysql.createPool({
   //   return useDefaultTypeCasting();
   // },
 });
-// connection.connect((err) => {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-//   console.log("Database connected");
-// });
+connection.connect((err) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log("Database connected");
+});
 module.exports = connection;

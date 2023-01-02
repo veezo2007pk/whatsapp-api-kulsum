@@ -103,6 +103,7 @@ app.get("/get_instance", function (req, res, next) {
     port: 1433,
     stream: false,
     options: {
+      database: "Instance",
       trustedConnection: true,
       encrypt: true,
       enableArithAbort: true,

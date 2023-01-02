@@ -100,6 +100,7 @@ app.get("/get_instance", function (req, res, next) {
     password: "Pe@chgate173",
     server: "hcmsolutions.com.pk",
     database: "Instance",
+    port: 1433,
     stream: false,
     options: {
       trustedConnection: true,

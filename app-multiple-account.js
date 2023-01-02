@@ -79,7 +79,7 @@ app.get("/refresh", function (req, res) {
 //   console.log("param" + req.params.id);
 // });
 
-var mysql = require("mysql");
+var sql = require("mssql");
 const pool = mysql.createPool(
   {
     host: "198.54.114.230",
@@ -92,25 +92,36 @@ const pool = mysql.createPool(
 );
 
 app.get("/get_instance", function (req, res, next) {
-  pool.getConnection(function (err, connection) {
+  var sql = require("mssql");
+
+  // config for your database
+  var config = {
+    user: "veezo2007pk",
+    password: "Pe@chgate173",
+    server: "hcmsolutions.com.pk",
+    database: "Instance",
+  };
+
+  // connect to your database
+  sql.connect(config, function (err) {
     if (err) throw err;
 
-    // Use the connection
-    connection.query(
-      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
-      function (error, results, fields) {
-        if (error) throw error;
+    // create Request object
+    var request = new sql.Request();
 
+    // query to the database and get the records
+    request.query(
+      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+      function (err, recordset) {
+        if (err) throw err;
         return res.status(200).json([
           {
-            results,
+            recordset,
           },
         ]);
-
-        // Don't use the connection here, it has been returned to the pool.
+        // send records as a response
       }
     );
-    connection.release();
   });
   // connection.query(
   //   "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",

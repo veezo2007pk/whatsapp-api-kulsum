@@ -27,6 +27,7 @@
     "http": "0.0.1-security",
     "mime-types": "^2.1.32",
     "morgan": "^1.10.0",
+    "mssql": "^9.0.1",
     "mysql": "github:mysqljs/mysql",
     "mysql-connection-pool-manager": "^1.5.9",
     "pm2": "^5.2.2",

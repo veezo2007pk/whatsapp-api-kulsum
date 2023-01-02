@@ -79,17 +79,17 @@ app.get("/refresh", function (req, res) {
 //   console.log("param" + req.params.id);
 // });
 
-var sql = require("mssql");
-const pool = mysql.createPool(
-  {
-    host: "198.54.114.230",
-    user: "contiuvl_waqas", //
-    password: "Pe@chgate173", //
-    database: "contiuvl_Instance",
-    port: 3306,
-  },
-  { debug: true }
-);
+// var sql = require("mssql");
+// const pool = mysql.createPool(
+//   {
+//     host: "198.54.114.230",
+//     user: "contiuvl_waqas", //
+//     password: "Pe@chgate173", //
+//     database: "contiuvl_Instance",
+//     port: 3306,
+//   },
+//   { debug: true }
+// );
 
 app.get("/get_instance", function (req, res, next) {
   var sql = require("mssql");

@@ -119,7 +119,7 @@ app.get("/get_instance", function (req, res, next) {
 
     // query to the database and get the records
     request.query(
-      "SELECT * FROM tblinstance ORDER BY intInstanceCode desc",
+      "SELECT * FROM tblInstance ORDER BY intInstanceCode desc",
       function (err, recordset) {
         if (err) throw err;
         return res.status(200).json([
